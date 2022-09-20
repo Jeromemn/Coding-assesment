@@ -8,17 +8,25 @@
     </head>
 
     <body>
+        <header>
+        <h1 class="main header"> Coding assesment</h1>
+        </header>
         <div>
-        <h1></h1>
+            <button id="start"> Start</button>
         </div>
-        <h2 class="time" style="text-align:center;"></h2>
+        <div id="score-Container" ></div>
+        <h2 id="countdown" style="text-align:right;"></h2>
         <div id="main"></div> 
-        <div>
-            <button>Start assesment</button>
+        <div id="score"></div>
+       
+        <div id="question-container" class="container" style="display:none">
+            <div id="question" class="child">Question placeholder</div>
+            <div id="choices" class="child">
+                <button class="choice" id="a">button a</button>
+                <button class="choice" id="b">button b </button>
+                <button class="choice" id="c">button c</button>
+                <button class="choice" id="d">button d</button>
+             </div>
         </div>
-        <h2></h2>
-        <form>
-            <input type="radio" name="choice" value="scripting"> 
-        </form>
         <script src="script.js"></script>
     </body>

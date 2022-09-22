@@ -25,7 +25,7 @@ const againButton =document.getElementById("again");
 
 let currentQuestionIndex = 0
 
-let timeLeft = 30;
+let timeLeft = 5;
 
 let score = 0;
 
@@ -278,15 +278,18 @@ function countdown() {
             endMessage.style.display = 'block';
             scoreTotal.style.display ='none';
             displayScoreBoard();
+
+            
             //playAgain();
            // var imgEl = document.createElement("img");
             //imgEl.setAttribute("src", "gameover-text.jpg");
             //mainEl.appendChild(imgEl);
             questionContainer.style.display = 'none';
+            
            // displayScoreBoard();
             // if time is 0 then show score 
             // sutract time when answer is wrong 
-        }
+        } 
     }, 1000);
 }
 function displayQuestion(index) {
@@ -322,7 +325,7 @@ function selectAnswer(event) {
         displayScoreBoard();
         timerEl.style.display = 'none';
         console.log(answers)
-        return;
+        
     }
 
     displayQuestion(currentQuestionIndex);
@@ -370,23 +373,29 @@ function submitScore(event) {
 //otherwise push current score to array and set the array in local storage
     highScore.push(score);
     localStorage.setItem('highscores', JSON.stringify(currentHightScores))
+
+ .addEventListener("click" , submitScore)
 }
 
 function playAgain() {
-    
-}
-
-function start(event) {
-    // reset global variables
-    // show start button and hide end screen
     startButton.style.display = 'none';
+    
+    displayQuestion(0);
+    
+    
+    countdown(timeLeft = 10);
+    displayScore(score = 0)
+    scoreBoard.style.display = 'none';
+    endMessage.style.display = 'none';
+    timerEl.style.display = 'block';
+    }
 
-    displayQuestion(currentQuestionIndex);
-    countdown();
-    displayScore()
-}
 
-startButton.addEventListener("click", start);
+againButton.addEventListener("click", playAgain);
+    
+
+
+
 
 // make try again button
 // local storage to save score

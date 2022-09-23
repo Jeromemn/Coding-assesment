@@ -14,22 +14,22 @@ const scoreTotal = document.getElementById("score");
 const scoreBoard = document.getElementById("score-board");
 const inputScore = document.getElementById("input-score");
 const endMessage = document.getElementById("Game-over");
-const title =document.getElementById("score-title");
-const first =document.getElementById("1");
-const second =document.getElementById("2");
-const third =document.getElementById("3");
-const forth =document.getElementById("4");
-const fifth =document.getElementById("5");
-const againButton =document.getElementById("again");
+const title = document.getElementById("score-title");
+const first = document.getElementById("1");
+const second = document.getElementById("2");
+const third = document.getElementById("3");
+const forth = document.getElementById("4");
+const fifth = document.getElementById("5");
+const againButton = document.getElementById("again");
+const highScoreList = document.getElementById("high-scores-list");
 
 
 let currentQuestionIndex = 0
 
-let timeLeft = 5;
+let timeLeft = 10;
 
 let score = 0;
 
-highScore = []
 
 
 const questions = [
@@ -244,10 +244,12 @@ const questions = [
     },
 ];
 
-const answers = []
+let answers = []
+
+let timeInterval;
 
 
-function start(event) {
+function startGame(event) {
     // reset global variables
     // show start button and hide end screen
     startButton.style.display = 'none';
@@ -257,39 +259,25 @@ function start(event) {
     displayScore()
 }
 
-startButton.addEventListener("click", start);
+startButton.addEventListener("click", startGame);
 
 
 function countdown() {
 
 
-    var timeInterval = setInterval(function () {
+    timeInterval = setInterval(function () {
+        console.log("timeLeft", timeLeft);
         if (timeLeft > 1) {
             timerEl.textContent = timeLeft + ' seconds remaining';
             timeLeft--;
         } else if (timeLeft === 1) {
-            timerEl.textContent = timeLeft + 'second remaining';
+            timerEl.textContent = timeLeft + ' second remaining';
             timeLeft--;
         } else if (timeLeft === 0) {
-            timerEl.textContent = 0 + ' seconds remaining';
-            timeLeft--;
-            timerEl.style.display = 'none';
-            endMessage.textContent = 'Game Over';
-            endMessage.style.display = 'block';
-            scoreTotal.style.display ='none';
-            displayScoreBoard();
 
-            
-            //playAgain();
-           // var imgEl = document.createElement("img");
-            //imgEl.setAttribute("src", "gameover-text.jpg");
-            //mainEl.appendChild(imgEl);
-            questionContainer.style.display = 'none';
-            
-           // displayScoreBoard();
-            // if time is 0 then show score 
-            // sutract time when answer is wrong 
-        } 
+            endGame();
+
+        }
     }, 1000);
 }
 function displayQuestion(index) {
@@ -300,37 +288,49 @@ function displayQuestion(index) {
     choiceC.textContent = questions[index].choices[2];
     choiceD.textContent = questions[index].choices[3];
     questionContainer.style.display = 'block';
+}
 
-    choiceA.addEventListener("click", selectAnswer)
-    choiceB.addEventListener("click", selectAnswer)
-    choiceC.addEventListener("click", selectAnswer)
-    choiceD.addEventListener("click", selectAnswer)
+choiceA.addEventListener("click", selectAnswer)
+choiceB.addEventListener("click", selectAnswer)
+choiceC.addEventListener("click", selectAnswer)
+choiceD.addEventListener("click", selectAnswer)
 
+function endGame() {
+    questionContainer.style.display = 'none';
+
+    clearInterval(timeInterval);
+    timerEl.style.display = 'none';
+    endMessage.textContent = 'Game Over';
+    endMessage.style.display = 'block';
+    scoreTotal.style.display = 'none';
+    inputScore.style.display = `block`;
+    displayScoreBoard();
 }
 
 function selectAnswer(event) {
-    console.log(event.target.textContent);
     answers.push(event.target.textContent);
     if (!checkAnswer(currentQuestionIndex)) {
-        timeLeft -= 5;
+        console.log('the answer is incorrect');
+        if (timeLeft <= 5) {
+            console.log('time is less than 5...ending game');
+            endGame();
+            return;
+        } else {
+            console.log('subtracting 5 from time');
+            timeLeft -= 5;
+        }
     } else {
-        score +=1;
+        score += 1;
     }
     currentQuestionIndex += 1;
-    console.log(currentQuestionIndex);
-
     if (currentQuestionIndex === questions.length) {
         // if on last question and answered in time, display end screen 
-        questionContainer.style.display = 'none';
-        displayScoreBoard();
-        timerEl.style.display = 'none';
-        console.log(answers)
-        
+        endGame();
+        return;
     }
 
     displayQuestion(currentQuestionIndex);
     displayScore();
-    
 }
 
 
@@ -341,61 +341,101 @@ function checkAnswer(index) {
     return false;
 }
 function displayScore() {
-        scoreTotal.textContent ="Current Score " +  score;
-        scoreTotal.style.display = "block";
+    scoreTotal.textContent = "Current Score " + score;
+    scoreTotal.style.display = "block";
 
-    
+
 }
 
 function displayScoreBoard() {
     title.textContent = "High scores";
-    
     inputScore.textContent = "Submit score " + score;
     inputScore.style.display = "block";
-    first.textContent = "1st";
-    second.textContent = "2nd";
-    third.textContent = "3rd";
-    forth.textContent = "4th";
-    fifth.textContent = "5th";
-    
+
     scoreBoard.style.display = "block";
+    const currentHighScores = JSON.parse(localStorage.getItem('highscores'));
+    // call from local storage array 
+    if (!currentHighScores) return;
+    console.log(currentHighScores);
+
+    
+    currentHighScores.sort(function(a, b) {
+        return b - a;
+      });
+    console.log(currentHighScores);
+    currentHighScores.forEach(function (highscore, index, ) {
+        console.log(document.getElementById(index))
+        if (document.getElementById(index)) return;
+        const el = document.createElement("li");
+        console.log("list item")
+
+        el.setAttribute("id", index);
+        el.textContent = index + 1 + ". " + highscore;
+        highScoreList.appendChild(el);
+        console.log("highscore");
+    });
+
 }
+// if arr.length > 5 { arr.splice 0 , 1}
 
 function submitScore(event) {
+
     //get current highscore in local storage
-    const currentHightScores = JSON.parse(localStorage.getItem('highscores'));
+    const currentHighScores = JSON.parse(localStorage.getItem('highscores'));
 
     // iff current high score is not defined add current score to storage and return
-    if (!currentHightScores) {
-   localStorage.setItem('highscores', JSON.stringify([score]))
-   return;
+    if (!currentHighScores) {
+        localStorage.setItem('highscores', JSON.stringify([score]))
+        displayScoreBoard();
+        inputScore.style.display = `none`;
+        return;
+    }
+    //otherwise push current score to array and set the array in local storage
+    currentHighScores.push(score);
+    
+    localStorage.setItem('highscores', JSON.stringify(currentHighScores))
+    // currentHighScores.sort(function (a, b) { return a - b; });
+    // currentHighScores.slice(Math.max(currentHighScores.length - 5, 0))
+    displayScoreBoard();
+    inputScore.style.display = `none`;
 }
-//otherwise push current score to array and set the array in local storage
-    highScore.push(score);
-    localStorage.setItem('highscores', JSON.stringify(currentHightScores))
+inputScore.addEventListener("click", submitScore);
 
- .addEventListener("click" , submitScore)
-}
+
 
 function playAgain() {
+
     startButton.style.display = 'none';
-    
-    displayQuestion(0);
-    
-    
-    countdown(timeLeft = 10);
-    displayScore(score = 0)
+    answers = []
+    currentQuestionIndex = 0;
+    score = 0;
+    timeLeft = 15;
+    countdown();
+    displayScore();
+    displayQuestion(currentQuestionIndex);
     scoreBoard.style.display = 'none';
     endMessage.style.display = 'none';
     timerEl.style.display = 'block';
-    }
+}
 
 
 againButton.addEventListener("click", playAgain);
-    
 
+// function submitScore(event) {
+//     highScore.push(event.target.textContent);
+// }
 
+// submitbutton.addEventListener("click", submitScore);
 
+// // reset variables first
+// timeLeft = 10;
+// currentQuestionIndex = 0;
+// score = 0;
+
+// // then trigger timer and display question
+// countdown();
+// displayScore();
+// displayQuestion(currentQuestionIndex);
 
 // make try again button
 // local storage to save score

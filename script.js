@@ -16,7 +16,7 @@ const highScoreList = document.getElementById("high-scores-list");
 
 let currentQuestionIndex = 0;
 
-let timeLeft = 10;
+let timeLeft = 60;
 
 let score = 0;
 
@@ -562,7 +562,7 @@ function playAgain() {
   answers = [];
   currentQuestionIndex = 0;
   score = 0;
-  timeLeft = 15;
+  timeLeft = 60;
   countdown();
   displayScore();
   displayQuestion(currentQuestionIndex);

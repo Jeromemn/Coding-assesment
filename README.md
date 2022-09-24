@@ -18,10 +18,18 @@ Provide instructions and examples for use. Include screenshots as needed.
 
 To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
 
-    
+      ```md
+    ![alt text](assetsimages/question-container.jpg)
+    ```mp4
+      ```md
+    ![alt text](assetsimages/Scoreboard.jpg)
+    ```
+      ```md
+    ![alt text](assetsimages/Start.jpg))
+    ```
 
     ```md
-    ![alt text]([](assetsimages/Codding-assesment-video.mp4))
+    ![alt text](assetsimages/Codding-assesment-video.mp4)
     ```
 
 ## Credits

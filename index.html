@@ -1,43 +1,45 @@
 <!DOCTYPE html>
-<html lang = "en">
-    <head>
-        <meta charset="UTF-8"/>
-        <title>Coding assesment</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-        <link rel = "stylesheet" href="style.css"/>
-      
-    </head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Coding assesment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-    <body>
-        <header>
-        <h1 class="main-header"> Coding assesment</h1>
-        </header>
-        <div id="start-container">
-            <button id="start"> Start</button>
-        </div>
-        <div id="score-container" ></div>
-        <h2 id="countdown-container" style="text-align:right;"></h2>
-        <div id="main"></div> 
-        <div id="score"></div>
-       <h2 id="Game-over" style="display:none"></h2>
-        <div id="question-container" class="container" style="display:none">
-            <div id="question" class="child">Question placeholder</div>
-            <div id="choices" class="child">
-                <button class="choice" id="a">button a</button>
-                <button class="choice" id="b">button b </button>
-                <button class="choice" id="c">button c</button>
-                <button class="choice" id="d">button d</button>
-             </div>
-        </div>
-        <div id="score-board" style="display:none">
-            <h2 id="score-title"></h2>
-            <button id="input-score">Submit</button>
-            <ul id="high-scores-list"></ul>
-                
-            
-            <button id="again">Play Again</button>
-        </div>
-        <script src="script.js"></script>
-    </body>
+  <body>
+    <header>
+      <h1>Coding assesment</h1>
+    </header>
+    <div id="start-container">
+      <button id="start">Start</button>
+    </div>
+
+    <h2 id="countdown-container" style="text-align: right; display: none"></h2>
+
+    <div id="score"></div>
+    <h2 id="Game-over" style="display: none"></h2>
+    <div id="question-container" class="container" style="display: none">
+      <div id="question" class="child">Question placeholder</div>
+      <div id="choices" class="child">
+        <button class="choice" id="a">button a</button>
+        <button class="choice" id="b">button b</button>
+        <button class="choice" id="c">button c</button>
+        <button class="choice" id="d">button d</button>
+      </div>
+    </div>
+    <div id="score-board" style="display: none">
+      <h2 id="score-title"></h2>
+      <button id="input-score">Submit</button>
+      <ul id="high-scores-list"></ul>
+
+      <button id="again">Play Again</button>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
